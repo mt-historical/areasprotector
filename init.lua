@@ -144,13 +144,13 @@ minetest.register_node("areasprotector:protector_large", {
 	drawtype = "nodebox",
 	node_box = nbox,
 	on_place = function(itemstack, player, pointed_thing)
-		on_place(itemstack, player, pointed_thing, radius_large, height_large, "large")
+		return on_place(itemstack, player, pointed_thing, radius_large, height_large, "large")
 	end,
 	after_dig_node = function(pos, oldnode, oldmetadata, digger)
-		after_dig(pos, oldnode, oldmetadata, digger, "large")
+		return after_dig(pos, oldnode, oldmetadata, digger, "large")
 	end,
 	on_punch = function(pos, node, puncher)
-		on_punch(pos, node, puncher, "large")
+		return on_punch(pos, node, puncher, "large")
 	end
 })
 
@@ -166,13 +166,13 @@ minetest.register_node("areasprotector:protector_small", {
 	drawtype = "nodebox",
 	node_box = nbox,
 	on_place = function(itemstack, player, pointed_thing)
-		on_place(itemstack, player, pointed_thing, radius_small, height_small, "small")
+		return on_place(itemstack, player, pointed_thing, radius_small, height_small, "small")
 	end,
 	after_dig_node = function(pos, oldnode, oldmetadata, digger)
-		after_dig(pos, oldnode, oldmetadata, digger, "small")
+		return after_dig(pos, oldnode, oldmetadata, digger, "small")
 	end,
 	on_punch = function(pos, node, puncher)
-		on_punch(pos, node, puncher, "small")
+		return on_punch(pos, node, puncher, "small")
 	end
 })
 
