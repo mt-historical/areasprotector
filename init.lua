@@ -257,5 +257,5 @@ minetest.register_craft({
 	}
 })
 
-minetest.register_alias("areasprotector:protector",    "areasprotector:protector_large")
-minetest.register_alias("areasprotector:display_node", "areasprotector:display_node_large")
+minetest.register_alias("areasprotector:protector",    "areasprotector:protector_small")
+minetest.register_alias("areasprotector:display_node", "areasprotector:display_node_small")
