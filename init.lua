@@ -75,8 +75,6 @@ local function after_dig(pos, oldnode, oldmetadata, digger, sizeword)
 						areas:remove(id)
 						areas:save()
 					end
-				else
-					inv:remove_item("main", "areasprotector:protector_"..sizeword.." 1")
 				end
 			else
 				areas:remove(id)
@@ -144,7 +142,7 @@ minetest.register_node("areasprotector:protector_large", {
 	drawtype = "nodebox",
 	node_box = nbox,
 	on_place = function(itemstack, player, pointed_thing)
-		on_place(itemstack, player, pointed_thing, radius_large, height_large, "large")
+		return on_place(itemstack, player, pointed_thing, radius_large, height_large, "large")
 	end,
 	after_dig_node = function(pos, oldnode, oldmetadata, digger)
 		after_dig(pos, oldnode, oldmetadata, digger, "large")
@@ -166,7 +164,7 @@ minetest.register_node("areasprotector:protector_small", {
 	drawtype = "nodebox",
 	node_box = nbox,
 	on_place = function(itemstack, player, pointed_thing)
-		on_place(itemstack, player, pointed_thing, radius_small, height_small, "small")
+		return on_place(itemstack, player, pointed_thing, radius_small, height_small, "small")
 	end,
 	after_dig_node = function(pos, oldnode, oldmetadata, digger)
 		after_dig(pos, oldnode, oldmetadata, digger, "small")
