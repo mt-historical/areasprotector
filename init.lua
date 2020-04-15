@@ -1,5 +1,4 @@
-
-local creative_mode = minetest.setting_getbool("creative_mode")
+local creative_mode = minetest.settings:get_bool("creative_mode")
 
 local function cyan(str)
 	return minetest.colorize("#00FFFF",str)
@@ -9,20 +8,20 @@ local function red(str)
 	return minetest.colorize("#FF5555",str)
 end
 
-local radius_large = minetest.setting_get("areasprotector_radius_large")
-					or minetest.setting_get("areasprotector_radius")
+local radius_large = minetest.settings:get("areasprotector_radius_large")
+					or minetest.settings:get("areasprotector_radius")
 					or 16
 
-local height_large = minetest.setting_get("areasprotector_height_large")
-					or minetest.setting_get("areasprotector_radius_large")
-					or minetest.setting_get("areasprotector_radius")
+local height_large = minetest.settings:get("areasprotector_height_large")
+					or minetest.settings:get("areasprotector_radius_large")
+					or minetest.settings:get("areasprotector_radius")
 					or 16
 
-local radius_small = minetest.setting_get("areasprotector_radius_small")
+local radius_small = minetest.settings:get("areasprotector_radius_small")
 					or 7
 
-local height_small = minetest.setting_get("areasprotector_height_small")
-					or minetest.setting_get("areasprotector_radius_small")
+local height_small = minetest.settings:get("areasprotector_height_small")
+					or minetest.settings:get("areasprotector_radius_small")
 					or 7
 
 local function remove_display(pos)
@@ -52,7 +51,7 @@ local function on_place(itemstack, player, pointed, radius, height, sizeword)
 	meta:set_string("infotext",infotext)
 	meta:set_int("area_id",id)
 	meta:set_string("owner",name)
-	if not minetest.setting_getbool("creative_mode") then
+	if not creative_mode then
 		itemstack:take_item()
 	end
 	return itemstack
@@ -100,7 +99,7 @@ local function on_punch(pos, node, puncher, sizeword)
 end
 
 local function on_step(self, dtime, sizeword)
-	if minetest.get_node(self.object:getpos()).name ~= "areasprotector:protector_"..sizeword then
+	if minetest.get_node(self.object:get_pos()).name ~= "areasprotector:protector_"..sizeword then
 		self.object:remove()
 		return
 	end
