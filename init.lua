@@ -23,6 +23,8 @@ local radius_small = minetest.settings:get("areasprotector_radius_small")
 local height_small = minetest.settings:get("areasprotector_height_small")
 					or minetest.settings:get("areasprotector_radius_small")
 					or 7
+					
+local max_protectors = minetest.settings:get("areasprotector_max_protectors") or 16
 
 local function remove_display(pos)
 	local objs = minetest.get_objects_inside_radius(pos, 0.5)
@@ -39,6 +41,26 @@ local function on_place(itemstack, player, pointed, radius, height, sizeword)
 	local perm,err = areas:canPlayerAddArea(pos1,pos2,name)
 	if not perm then
 		minetest.chat_send_player(name,red("You are not allowed to protect that area: ")..err)
+		return itemstack
+	end
+	local conflicts = minetest.find_nodes_in_area(pos1,pos2,{"areasprotector:protector_small","areasprotector:protector_large",})
+	if conflicts and #conflicts > 0 and not minetest.check_player_privs(name,"areas") then
+		minetest.chat_send_player(name,red("Another protector block is too close: ").."another protector block was found at "..cyan(minetest.pos_to_string(conflicts[1]))..", and this size of protector block cannot be placed within "..cyan(tostring(radius).."m").." of others.")
+		return itemstack
+	end
+	local userareas = 0
+	for k,v in pairs(areas.areas) do
+		if v.owner == name and string.sub(v.name,1,28) == "Protected by Protector Block" then
+			userareas = userareas + 1
+		end
+	end
+	if userareas >= max_protectors and not minetest.check_player_privs(name,"areas") then
+		minetest.chat_send_player(name,red("You are using too many protector blocks:").." this server allows you to use up to "..cyan(tostring(max_protectors)).." protector blocks, and you already have "..cyan(tostring(userareas))..".")
+		if sizeword == "small" then
+			minetest.chat_send_player(name,"If you need to protect more, please consider using the larger protector blocks, using the chat commands instead, or at the very least taking the time to rename some of your areas to something more descriptive first.")
+		else
+			minetest.chat_send_player(name,"If you need to protect more, please consider using the chat commands instead, or at the very least take the time to rename some of your areas to something more descriptive first.")
+		end
 		return itemstack
 	end
 	local id = areas:add(name,"Protected by Protector Block at "..minetest.pos_to_string(pos, 0),pos1,pos2)
