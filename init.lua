@@ -11,20 +11,30 @@ end
 local radius_large = minetest.settings:get("areasprotector_radius_large")
 					or minetest.settings:get("areasprotector_radius")
 					or 16
+					
+radius_large = tonumber(radius_large) or 16
 
 local height_large = minetest.settings:get("areasprotector_height_large")
 					or minetest.settings:get("areasprotector_radius_large")
 					or minetest.settings:get("areasprotector_radius")
 					or 16
+					
+height_large = tonumber(height_large) or 16
 
 local radius_small = minetest.settings:get("areasprotector_radius_small")
 					or 7
+					
+radius_small = tonumber(radius_small) or 7
 
 local height_small = minetest.settings:get("areasprotector_height_small")
 					or minetest.settings:get("areasprotector_radius_small")
 					or 7
 					
+height_small = tonumber(height_small) or 7
+					
 local max_protectors = minetest.settings:get("areasprotector_max_protectors") or 16
+
+max_protectors = tonumber(max_protectors) or 16
 
 local function remove_display(pos)
 	local objs = minetest.get_objects_inside_radius(pos, 0.5)
